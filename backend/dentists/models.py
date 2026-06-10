@@ -10,7 +10,7 @@ class DentistProfile(models.Model):
     memberships = models.TextField()
     experience = models.TextField()
 
-    image = models.URLField(blank=True, null=True)
+    profile_image = models.ImageField(upload_to='dentist_images/')
 
     def __str__(self):
         return self.name

@@ -23,8 +23,7 @@ class Appointment(models.Model):
     email = models.EmailField(blank=True, null=True)
 
     service = models.CharField(max_length=20, choices=SERVICE_CHOICES)
-    date = models.DateField()
-    time = models.TimeField()
+    
 
     message = models.TextField(blank=True, null=True)
 
