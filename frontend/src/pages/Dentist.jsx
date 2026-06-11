@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 export default function Dentist() {
   const [dentist, setDentist] = useState(null);
@@ -27,103 +28,143 @@ export default function Dentist() {
       });
   }, []);
 
+  // Add CSS animation for spinner
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
+
   if (loading) {
     return (
-      <div style={loadingStateStyle}>
-        <div style={spinnerStyle} />
-        <h2 style={loadingTextStyle}>Loading Clinical Profile...</h2>
-      </div>
+      <>
+        <Helmet>
+          <title>The Dental Gallery | Our Team - Clinical Leadership</title>
+          <meta name="description" content="Meet our experienced lead dentist and clinical team at The Dental Gallery. Expert dental care in Lavington, Nairobi." />
+        </Helmet>
+        <div style={loadingStateStyle}>
+          <div style={spinnerStyle} />
+          <h2 style={loadingTextStyle}>Loading Clinical Profile...</h2>
+        </div>
+      </>
     );
   }
 
   if (!dentist) {
     return (
-      <div style={loadingStateStyle}>
-        <h2 style={loadingTextStyle}>Profile Temporarily Unavailable</h2>
-        <p style={{ color: "#475569" }}>Please refresh or check back shortly.</p>
-      </div>
+      <>
+        <Helmet>
+          <title>The Dental Gallery | Our Team</title>
+          <meta name="description" content="Meet our dental professionals at The Dental Gallery in Lavington, Nairobi." />
+        </Helmet>
+        <div style={loadingStateStyle}>
+          <h2 style={loadingTextStyle}>Profile Temporarily Unavailable</h2>
+          <p style={{ color: "#475569" }}>Please refresh or check back shortly.</p>
+        </div>
+      </>
     );
   }
 
   return (
-    <div style={pageWrapperStyle}>
-      
-      {/* SECTION HEADER */}
-      <section style={headerSectionStyle}>
-        <span style={goldLabelStyle}>Expertise & Leadership</span>
-        <h1 style={mainHeadingStyle}>Clinical Leadership</h1>
-        <p style={subHeadingStyle}>
-          At The Dental Gallery, patient safety, quality assurance, and ethical clinical practice 
-          are embedded within every single aspect of our care delivery.
-        </p>
-        <div style={decorativeDividerStyle} />
-      </section>
+    <>
+      <Helmet>
+        <title>The Dental Gallery | Dr. {dentist.name?.split(' ')[0] || 'Lead'} {dentist.name?.split(' ')[1] || 'Dentist'} - Clinical Leadership</title>
+        <meta name="description" content={`Meet ${dentist.name}, ${dentist.title || 'lead dentist'} at The Dental Gallery. Expert in ${dentist.experience?.substring(0, 100) || 'comprehensive dental care'}. Book your appointment today.`} />
+        <meta name="keywords" content={`${dentist.name}, dentist Nairobi, dental clinic Lavington, ${dentist.title}, The Dental Gallery`} />
+        <meta property="og:title" content={`The Dental Gallery | Dr. ${dentist.name} - Expert Dental Care`} />
+        <meta property="og:description" content={`Learn about ${dentist.name}'s qualifications, experience, and approach to patient care.`} />
+        {dentist.profile_image && (
+          <meta property="og:image" content={dentist.profile_image.startsWith('http') ? dentist.profile_image : `http://127.0.0.1:8000${dentist.profile_image}`} />
+        )}
+      </Helmet>
 
-      {/* PROFILE GRID LAYOUT */}
-      <div style={profileFlexLayoutStyle}>
+      <div style={pageWrapperStyle}>
         
-        {/* LEFT SIDE: Tailored Profile Image Bracket */}
-        <div style={imageColumnStyle}>
-          {dentist.profile_image ? (
-            <div style={imageFrameStyle}>
-              <img
-                src={dentist.profile_image.startsWith('http') ? dentist.profile_image : `http://127.0.0.1:8000${dentist.profile_image}`}
-                alt={dentist.name || "Lead Dentist"}
-                style={profileImageStyle}
-              />
-            </div>
-          ) : (
-            <div style={fallbackImageFrameStyle}>
-              <span style={{ fontSize: "50px" }}>🩺</span>
-              <span style={{ fontSize: "14px", marginTop: "10px", fontWeight: "600" }}>No Image Uploaded</span>
-            </div>
-          )}
-        </div>
-
-        {/* RIGHT SIDE: Biography Details */}
-        <div style={detailsColumnStyle}>
-          <h2 style={dentistNameStyle}>{dentist.name || "No Name Configured"}</h2>
-          <p style={dentistTitleStyle}>{dentist.title || "Clinical Professional"}</p>
-          
-          <p style={biographyParagraphStyle}>
-            {dentist.bio || "Biography details pending configuration in the backend administration panel."}
+        {/* SECTION HEADER */}
+        <section style={headerSectionStyle}>
+          <span style={goldLabelStyle}>Expertise & Leadership</span>
+          <h1 style={mainHeadingStyle}>Clinical Leadership</h1>
+          <p style={subHeadingStyle}>
+            At The Dental Gallery, patient safety, quality assurance, and ethical clinical practice 
+            are embedded within every single aspect of our care delivery.
           </p>
+          <div style={decorativeDividerStyle} />
+        </section>
 
-          {/* LOWER GRID: Academic & Professional Credentials */}
-          <div style={credentialsGridStyle}>
-            {dentist.education && (
-              <div style={credentialBlockStyle}>
-                <h3 style={credentialHeadingStyle}>🎓 Education</h3>
-                <p style={credentialBodyStyle}>{dentist.education}</p>
+        {/* PROFILE GRID LAYOUT */}
+        <div style={profileFlexLayoutStyle}>
+          
+          {/* LEFT SIDE: Tailored Profile Image Bracket */}
+          <div style={imageColumnStyle}>
+            {dentist.profile_image ? (
+              <div style={imageFrameStyle}>
+                <img
+                  src={dentist.profile_image.startsWith('http') ? dentist.profile_image : `http://127.0.0.1:8000${dentist.profile_image}`}
+                  alt={dentist.name || "Lead Dentist"}
+                  style={profileImageStyle}
+                />
               </div>
-            )}
-
-            {dentist.credentials && (
-              <div style={credentialBlockStyle}>
-                <h3 style={credentialHeadingStyle}>📜 Credentials</h3>
-                <p style={credentialBodyStyle}>{dentist.credentials}</p>
-              </div>
-            )}
-
-            {dentist.memberships && (
-              <div style={credentialBlockStyle}>
-                <h3 style={credentialHeadingStyle}>🤝 Memberships</h3>
-                <p style={credentialBodyStyle}>{dentist.memberships}</p>
-              </div>
-            )}
-
-            {dentist.experience && (
-              <div style={credentialBlockStyle}>
-                <h3 style={credentialHeadingStyle}>💼 Experience</h3>
-                <p style={credentialBodyStyle}>{dentist.experience}</p>
+            ) : (
+              <div style={fallbackImageFrameStyle}>
+                <span style={{ fontSize: "50px" }}>🩺</span>
+                <span style={{ fontSize: "14px", marginTop: "10px", fontWeight: "600" }}>No Image Uploaded</span>
               </div>
             )}
           </div>
 
-        </div>
-      </div>
+          {/* RIGHT SIDE: Biography Details */}
+          <div style={detailsColumnStyle}>
+            <h2 style={dentistNameStyle}>{dentist.name || "No Name Configured"}</h2>
+            <p style={dentistTitleStyle}>{dentist.title || "Clinical Professional"}</p>
+            
+            <p style={biographyParagraphStyle}>
+              {dentist.bio || "Biography details pending configuration in the backend administration panel."}
+            </p>
 
-    </div>
+            {/* LOWER GRID: Academic & Professional Credentials */}
+            <div style={credentialsGridStyle}>
+              {dentist.education && (
+                <div style={credentialBlockStyle}>
+                  <h3 style={credentialHeadingStyle}>🎓 Education</h3>
+                  <p style={credentialBodyStyle}>{dentist.education}</p>
+                </div>
+              )}
+
+              {dentist.credentials && (
+                <div style={credentialBlockStyle}>
+                  <h3 style={credentialHeadingStyle}>📜 Credentials</h3>
+                  <p style={credentialBodyStyle}>{dentist.credentials}</p>
+                </div>
+              )}
+
+              {dentist.memberships && (
+                <div style={credentialBlockStyle}>
+                  <h3 style={credentialHeadingStyle}>🤝 Memberships</h3>
+                  <p style={credentialBodyStyle}>{dentist.memberships}</p>
+                </div>
+              )}
+
+              {dentist.experience && (
+                <div style={credentialBlockStyle}>
+                  <h3 style={credentialHeadingStyle}>💼 Experience</h3>
+                  <p style={credentialBodyStyle}>{dentist.experience}</p>
+                </div>
+              )}
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+    </>
   );
 }
 
@@ -232,7 +273,7 @@ const dentistNameStyle = {
 
 const dentistTitleStyle = {
   fontSize: "18px",
-  color: "#D4AF37", // Elegant signature gold accenting their clinical title
+  color: "#D4AF37",
   fontWeight: "600",
   margin: "0 0 30px 0",
   letterSpacing: "0.5px"

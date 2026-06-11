@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from "react-router-dom";
 
 // --- HOVER MICRO-INTERACTIONS ---
@@ -27,12 +27,198 @@ const handleOutlineLeave = (e) => {
 };
 
 export default function Hero() {
+  // Image configuration with individual sizing and positioning
+  const images = [
+    { 
+      url: '/images/image10.png', 
+      objectFit: 'cover', 
+      objectPosition: 'center',
+      alt: 'Dental Gallery Interior'
+    },
+    { 
+      url: '/images/image15.png', 
+      objectFit: 'contain', 
+      objectPosition: 'center',
+      alt: 'Modern Dental Equipment'
+    },
+    { 
+      url: '/images/image16.png', 
+      objectFit: 'cover', 
+      objectPosition: 'top 30%',
+      alt: 'Treatment Room'
+    },
+    { 
+      url: '/images/image17.png', 
+      objectFit: 'contain', 
+      objectPosition: 'center 40%',
+      alt: 'Dental Gallery Reception'
+    },
+    { 
+      url: '/images/image18.png', 
+      objectFit: 'cover', 
+      objectPosition: 'center',
+      alt: 'Clinical Excellence'
+    }
+  ];
+  
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+
+  // Auto-advance carousel every 5 seconds
+  useEffect(() => {
+    const timer = setInterval(() => {
+      nextImage();
+    }, 5000);
+    
+    return () => clearInterval(timer);
+  }, [currentIndex]);
+
+  const nextImage = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+
+  const prevImage = () => {
+    if (isTransitioning) return;
+    setIsTransitioning(true);
+    setCurrentIndex((prevIndex) => 
+      prevIndex === 0 ? images.length - 1 : prevIndex - 1
+    );
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+
+  const goToImage = (index) => {
+    if (isTransitioning || index === currentIndex) return;
+    setIsTransitioning(true);
+    setCurrentIndex(index);
+    setTimeout(() => setIsTransitioning(false), 500);
+  };
+
+  const leftMediaColumnStyle = {
+    flex: "1 1 500px",
+    minHeight: "450px",
+    position: "relative",
+    overflow: "hidden",
+    backgroundColor: "#f0f2f5"
+  };
+
+  // REMOVED: The opacity transition effect - now images stay at full opacity
+  const getImageStyle = () => ({
+    width: "100%",
+    height: "100%",
+    objectFit: images[currentIndex].objectFit,
+    objectPosition: images[currentIndex].objectPosition,
+    // Removed transition and opacity effects
+  });
+
+  const navButtonStyle = {
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    backgroundColor: 'rgba(15, 32, 56, 0.7)',
+    color: '#D4AF37',
+    border: 'none',
+    width: '40px',
+    height: '40px',
+    borderRadius: '50%',
+    cursor: 'pointer',
+    zIndex: 10,
+    fontSize: '20px',
+    fontWeight: 'bold',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    transition: 'all 0.3s ease',
+    backdropFilter: 'blur(5px)'
+  };
+
+  const dotContainerStyle = {
+    position: 'absolute',
+    bottom: '20px',
+    left: '50%',
+    transform: 'translateX(-50%)',
+    display: 'flex',
+    gap: '12px',
+    zIndex: 10,
+    padding: '8px 16px',
+    borderRadius: '50px',
+    background: 'rgba(15, 32, 56, 0.5)',
+    backdropFilter: 'blur(5px)'
+  };
+
+  const dotStyle = (index) => ({
+    width: '10px',
+    height: '10px',
+    borderRadius: '50%',
+    backgroundColor: index === currentIndex ? '#D4AF37' : 'rgba(255, 255, 255, 0.5)',
+    cursor: 'pointer',
+    transition: 'all 0.3s ease',
+    border: index === currentIndex ? '2px solid #D4AF37' : 'none'
+  });
+
   return (
     <section style={heroContainerStyle}>
       
-      {/* LEFT COLUMN: Visual Media Presentation */}
+      {/* LEFT COLUMN: Visual Media Presentation with Carousel */}
       <div style={leftMediaColumnStyle}>
-        <div style={imageOverlayTintStyle} />
+        <img 
+          src={images[currentIndex].url}
+          alt={images[currentIndex].alt}
+          style={getImageStyle()}
+        />
+        
+        {/* Left Navigation Arrow */}
+        <button 
+          onClick={prevImage} 
+          style={{ ...navButtonStyle, left: '15px' }}
+          onMouseEnter={(e) => {
+            e.target.style.backgroundColor = '#D4AF37';
+            e.target.style.color = '#0f2038';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.backgroundColor = 'rgba(15, 32, 56, 0.7)';
+            e.target.style.color = '#D4AF37';
+          }}
+        >
+          ❮
+        </button>
+
+        {/* Right Navigation Arrow */}
+        <button 
+          onClick={nextImage} 
+          style={{ ...navButtonStyle, right: '15px' }}
+          onMouseEnter={(e) => {
+            e.target.style.backgroundColor = '#D4AF37';
+            e.target.style.color = '#0f2038';
+          }}
+          onMouseLeave={(e) => {
+            e.target.style.backgroundColor = 'rgba(15, 32, 56, 0.7)';
+            e.target.style.color = '#D4AF37';
+          }}
+        >
+          ❯
+        </button>
+
+        {/* Dot Indicators */}
+        <div style={dotContainerStyle}>
+          {images.map((_, index) => (
+            <div
+              key={index}
+              style={dotStyle(index)}
+              onClick={() => goToImage(index)}
+              onMouseEnter={(e) => {
+                if (index !== currentIndex) {
+                  e.target.style.transform = 'scale(1.3)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                e.target.style.transform = 'scale(1)';
+              }}
+            />
+          ))}
+        </div>
       </div>
 
       {/* RIGHT COLUMN: Editorial Content & Call-to-Actions */}
@@ -84,35 +270,14 @@ export default function Hero() {
   );
 }
 
-// --- ARCHITECTURAL TWO-COLUMN SPLIT STYLES ---
-
+// --- STYLES ---
 const heroContainerStyle = {
   display: "flex",
-  flexWrap: "wrap", // Enables responsive collapsing on smaller mobile viewports
+  flexWrap: "wrap",
   minHeight: "85vh",
   width: "100%",
   background: "#ffffff",
   fontFamily: "Arial, sans-serif"
-};
-
-const leftMediaColumnStyle = {
-  flex: "1 1 500px", // Grow and shrink intelligently, snapping at 500px base
-  backgroundImage: "url('/images/image10.png')",
-  backgroundSize: 'cover',
-  backgroundPosition: 'center',
-  backgroundRepeat: 'no-repeat',
-  minHeight: "450px",
-  position: "relative"
-};
-
-const imageOverlayTintStyle = {
-  position: "absolute",
-  top: 0,
-  left: 0,
-  width: "100%",
-  height: "100%",
-  // Soft atmospheric corporate blue tint balancing the raw photograph image
-  background: "linear-gradient(135deg, rgba(15, 32, 56, 0.15) 0%, rgba(31, 59, 91, 0.2) 100%)"
 };
 
 const rightContentColumnStyle = {
@@ -127,7 +292,7 @@ const rightContentColumnStyle = {
 const innerContentContainerStyle = {
   maxWidth: "620px",
   width: "100%",
-  textAlign: "left" // Clean editorial left-aligned copy text
+  textAlign: "left"
 };
 
 const locationBadgeStyle = {
@@ -147,14 +312,14 @@ const locationBadgeStyle = {
 const brandTitleStyle = {
   fontSize: "54px",
   margin: "0 0 12px 0",
-  color: "#0f2038", // Inverted to high-contrast deep navy
+  color: "#0f2038",
   fontWeight: "bold",
   letterSpacing: "-1px",
   lineHeight: "1.1"
 };
 
 const taglineStyle = {
-  color: "#475569", // Subdued classy gray slate subtitle
+  color: "#475569",
   fontWeight: "600",
   fontSize: "22px",
   margin: "0 0 25px 0",
@@ -165,7 +330,7 @@ const introParagraphStyle = {
   margin: "0 0 40px 0",
   fontSize: "16px",
   lineHeight: "1.8",
-  color: "#475569" // Clear clinical reading gray contrast
+  color: "#475569"
 };
 
 const buttonGroupStyle = {
@@ -193,7 +358,7 @@ const goldButtonStyle = {
 const outlineButtonStyle = {
   padding: "16px 36px",
   background: "transparent",
-  color: "#0f2038", // Swapped line outline to deep navy
+  color: "#0f2038",
   border: "2px solid #0f2038",
   borderRadius: "4px",
   fontWeight: "bold",

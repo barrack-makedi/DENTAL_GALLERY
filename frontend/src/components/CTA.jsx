@@ -67,7 +67,7 @@ export default function CTA() {
     <section style={ctaSection}>
       <div style={container}>
         <p style={topSubheading}>Experience Premium Care</p>
-        <h2 style={heading}>Ready for a brighter, healthier smile?</h2>
+        <h2 style={heading}>Refined care, remarkable smiles</h2>
         <p style={description}>
           Discover bespoke dental services tailored to you. Secure your private consultation online in less than two minutes.
         </p>

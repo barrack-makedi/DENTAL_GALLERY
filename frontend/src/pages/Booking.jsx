@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Helmet } from "react-helmet-async";
 
 export default function Booking() {
   const [loading, setLoading] = useState(false);
@@ -63,7 +64,7 @@ export default function Booking() {
         message: "An error occurred while routing your appointment query. Please verify details or try again."
       });
     } finally {
-      loading(false);
+      setLoading(false); // FIXED: was loading(false) instead of setLoading(false)
     }
   };
 
@@ -74,153 +75,167 @@ export default function Booking() {
   });
 
   return (
-    <div
-      style={{
-        width: "100%",
-        minHeight: "100vh", 
-        fontFamily: "Arial, sans-serif",
-        backgroundImage:
-          "linear-gradient(rgba(15, 32, 56, 0.35), rgba(15, 32, 56, 0.35)), url('/images/image3.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "left bottom",
-        backgroundRepeat: "no-repeat",
-        padding: "140px 20px 100px 20px",
-        boxSizing: "border-box"
-      }}
-    >
-      {/* SECTION HEADER */}
-      <div style={{ textAlign: "center", marginBottom: "50px" }}>
-        <span style={goldLabelStyle}>Priority Consultations</span>
-        <h1 style={heroTitleStyle}>Appointments</h1>
-        <p style={heroSubtitleStyle}>
-          Take the first step toward a healthier, brighter smile. Submit your
-          appointment request and our concierge clinical team will contact you shortly.
-        </p>
-        <div style={decorativeDividerStyle} />
-      </div>
+    <>
+      <Helmet>
+        <title>The Dental Gallery | Book Appointment - Schedule Your Visit</title>
+        <meta name="description" content="Book your dental appointment at The Dental Gallery in Lavington, Nairobi. Schedule a consultation for checkups, cleaning, whitening, braces, or surgery. Our team will confirm your preferred time." />
+        <meta name="keywords" content="book dental appointment, dentist appointment Nairobi, schedule dental checkup, teeth cleaning booking, dental consultation Lavington" />
+        <meta property="og:title" content="The Dental Gallery | Book Your Appointment" />
+        <meta property="og:description" content="Take the first step toward a healthier, brighter smile. Submit your appointment request and our concierge clinical team will contact you shortly." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://thedentalgallery.com/booking" />
+        <meta property="og:image" content="/images/logo3.png" />
+        <meta name="twitter:card" content="summary" />
+        <meta name="robots" content="index, follow" />
+      </Helmet>
 
-      {/* GLASSMORPHISM CARD CONTAINER */}
-      <div style={formCardContainerStyle}>
-        <h2 style={formHeadingStyle}>Book Your Visit</h2>
-        <p style={formDescriptionStyle}>
-          Complete the administrative fields below and our clinical team will coordinate 
-          with you to lock down your preferred hours.
-        </p>
+      <div
+        style={{
+          width: "100%",
+          minHeight: "100vh", 
+          fontFamily: "Arial, sans-serif",
+          backgroundImage:
+            "linear-gradient(rgba(15, 32, 56, 0.35), rgba(15, 32, 56, 0.35)), url('/images/image3.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "left bottom",
+          backgroundRepeat: "no-repeat",
+          padding: "140px 20px 100px 20px",
+          boxSizing: "border-box"
+        }}
+      >
+        {/* SECTION HEADER */}
+        <div style={{ textAlign: "center", marginBottom: "50px" }}>
+          <span style={goldLabelStyle}>Priority Consultations</span>
+          <h1 style={heroTitleStyle}>Appointments</h1>
+          <p style={heroSubtitleStyle}>
+            Take the first step toward a healthier, brighter smile. Submit your
+            appointment request and our concierge clinical team will contact you shortly.
+          </p>
+          <div style={decorativeDividerStyle} />
+        </div>
 
-        <form onSubmit={handleSubmit} style={formStyle}>
-          <div>
-            <label style={labelStyle}>Full Name *</label>
-            <input
-              type="text"
-              name="full_name"
-              value={formData.full_name}
-              onChange={handleChange}
-              onFocus={() => setFocusedField("full_name")}
-              onBlur={() => setFocusedField(null)}
-              placeholder="Enter your full name"
-              required
-              style={getFieldStyle("full_name")}
-            />
-          </div>
+        {/* GLASSMORPHISM CARD CONTAINER */}
+        <div style={formCardContainerStyle}>
+          <h2 style={formHeadingStyle}>Book Your Visit</h2>
+          <p style={formDescriptionStyle}>
+            Complete the administrative fields below and our clinical team will coordinate 
+            with you to lock down your preferred hours.
+          </p>
 
-          <div style={contactGroup}>
-            <div style={{ flex: "1 1 260px" }}>
-              <label style={labelStyle}>Phone Number *</label>
+          <form onSubmit={handleSubmit} style={formStyle}>
+            <div>
+              <label style={labelStyle}>Full Name *</label>
               <input
-                type="tel"
-                name="phone"
-                value={formData.phone}
+                type="text"
+                name="full_name"
+                value={formData.full_name}
                 onChange={handleChange}
-                onFocus={() => setFocusedField("phone")}
+                onFocus={() => setFocusedField("full_name")}
                 onBlur={() => setFocusedField(null)}
-                placeholder="+254 712 345 678"
+                placeholder="Enter your full name"
                 required
-                style={getFieldStyle("phone")}
+                style={getFieldStyle("full_name")}
               />
             </div>
 
-            <div style={{ flex: "1 1 260px" }}>
-              <label style={labelStyle}>Email Address</label>
-              <input
-                type="email"
-                name="email"
-                value={formData.email}
+            <div style={contactGroup}>
+              <div style={{ flex: "1 1 260px" }}>
+                <label style={labelStyle}>Phone Number *</label>
+                <input
+                  type="tel"
+                  name="phone"
+                  value={formData.phone}
+                  onChange={handleChange}
+                  onFocus={() => setFocusedField("phone")}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="+254 712 345 678"
+                  required
+                  style={getFieldStyle("phone")}
+                />
+              </div>
+
+              <div style={{ flex: "1 1 260px" }}>
+                <label style={labelStyle}>Email Address</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email}
+                  onChange={handleChange}
+                  onFocus={() => setFocusedField("email")}
+                  onBlur={() => setFocusedField(null)}
+                  placeholder="example@email.com"
+                  style={getFieldStyle("email")}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label style={labelStyle}>Requested Service</label>
+              <select
+                name="service"
+                value={formData.service}
                 onChange={handleChange}
-                onFocus={() => setFocusedField("email")}
+                onFocus={() => setFocusedField("service")}
                 onBlur={() => setFocusedField(null)}
-                placeholder="example@email.com"
-                style={getFieldStyle("email")}
+                style={{
+                  ...getFieldStyle("service"),
+                  cursor: "pointer"
+                }}
+              >
+                <option value="checkup" style={dropdownOptionStyle}>Dental Check-up & Consultation</option>
+                <option value="cleaning" style={dropdownOptionStyle}>Professional Teeth Cleaning</option>
+                <option value="whitening" style={dropdownOptionStyle}>Teeth Whitening</option>
+                <option value="braces" style={dropdownOptionStyle}>Braces & Aligners Consultation</option>
+                <option value="extraction" style={dropdownOptionStyle}>Tooth Extraction / Surgery</option>
+              </select>
+            </div>
+
+            <div>
+              <label style={labelStyle}>Additional Notes / Dental Concerns</label>
+              <textarea
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
+                onFocus={() => setFocusedField("message")}
+                onBlur={() => setFocusedField(null)}
+                rows="4"
+                placeholder="Tell us about your dental concerns..."
+                style={{
+                  ...getFieldStyle("message"),
+                  resize: "vertical"
+                }}
               />
             </div>
-          </div>
 
-          <div>
-            <label style={labelStyle}>Requested Service</label>
-            <select
-              name="service"
-              value={formData.service}
-              onChange={handleChange}
-              onFocus={() => setFocusedField("service")}
-              onBlur={() => setFocusedField(null)}
+            <button
+              type="submit"
+              disabled={loading}
               style={{
-                ...getFieldStyle("service"),
-                cursor: "pointer"
+                ...submitBtn,
+                opacity: loading ? 0.7 : 1,
+                cursor: loading ? "not-allowed" : "pointer"
               }}
             >
-              {/* FIXED: Formatted options with explicit solid backgrounds to ensure visibility */}
-              <option value="checkup" style={dropdownOptionStyle}>Dental Check-up & Consultation</option>
-              <option value="cleaning" style={dropdownOptionStyle}>Professional Teeth Cleaning</option>
-              <option value="whitening" style={dropdownOptionStyle}>Teeth Whitening</option>
-              <option value="braces" style={dropdownOptionStyle}>Braces & Aligners Consultation</option>
-              <option value="extraction" style={dropdownOptionStyle}>Tooth Extraction / Surgery</option>
-            </select>
-          </div>
+              {loading ? "Processing Intake..." : "Request Appointment"}
+            </button>
 
-          <div>
-            <label style={labelStyle}>Additional Notes / Dental Concerns</label>
-            <textarea
-              name="message"
-              value={formData.message}
-              onChange={handleChange}
-              onFocus={() => setFocusedField("message")}
-              onBlur={() => setFocusedField(null)}
-              rows="4"
-              placeholder="Tell us about your dental concerns..."
-              style={{
-                ...getFieldStyle("message"),
-                resize: "vertical"
-              }}
-            />
-          </div>
-
-          <button
-            type="submit"
-            disabled={loading}
-            style={{
-              ...submitBtn,
-              opacity: loading ? 0.7 : 1,
-              cursor: loading ? "not-allowed" : "pointer"
-            }}
-          >
-            {loading ? "Processing Intake..." : "Request Appointment"}
-          </button>
-
-          {/* INLINE STATUS RESPONSES */}
-          {submitStatus.message && (
-            <div 
-              style={{
-                ...statusBannerStyle,
-                background: submitStatus.success ? "rgba(240, 253, 244, 0.2)" : "rgba(254, 242, 242, 0.2)",
-                border: submitStatus.success ? "1px solid rgba(187, 247, 208, 0.4)" : "1px solid rgba(254, 202, 202, 0.4)",
-                color: submitStatus.success ? "#bbf7d0" : "#fecaca"
-              }}
-            >
-              {submitStatus.success ? "✓ " : "✕ "} {submitStatus.message}
-            </div>
-          )}
-        </form>
+            {/* INLINE STATUS RESPONSES */}
+            {submitStatus.message && (
+              <div 
+                style={{
+                  ...statusBannerStyle,
+                  background: submitStatus.success ? "rgba(240, 253, 244, 0.2)" : "rgba(254, 242, 242, 0.2)",
+                  border: submitStatus.success ? "1px solid rgba(187, 247, 208, 0.4)" : "1px solid rgba(254, 202, 202, 0.4)",
+                  color: submitStatus.success ? "#bbf7d0" : "#fecaca"
+                }}
+              >
+                {submitStatus.success ? "✓ " : "✕ "} {submitStatus.message}
+              </div>
+            )}
+          </form>
+        </div>
       </div>
-    </div>
+    </>
   );
 }
 
@@ -263,7 +278,7 @@ const decorativeDividerStyle = {
 const formCardContainerStyle = {
   maxWidth: "680px",
   margin: "0 auto",
-  background: "rgba(15, 32, 56, 0.65)", // FIXED: Changed card backing from translucent white to rich navy tint to make input values pop perfectly
+  background: "rgba(15, 32, 56, 0.65)",
   backdropFilter: "blur(25px)",
   WebkitBackdropFilter: "blur(25px)",
   borderRadius: "16px",
@@ -323,10 +338,9 @@ const inputStyle = {
   transition: "all 0.2s ease-in-out"
 };
 
-// NEW STYLE SHEET SPECIFICATION FOR OPTIONS DROP-DOWN
 const dropdownOptionStyle = {
-  background: "#0f2038", // FIXED: Forces drop-down panel background to remain solid luxurious clinic navy 
-  color: "#ffffff",      // FIXED: Forces text options to stay perfectly legible crisp white
+  background: "#0f2038",
+  color: "#ffffff",
   padding: "12px"
 };
 

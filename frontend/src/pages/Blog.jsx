@@ -1,9 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 export default function Blog() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  // Add CSS animation for spinner
+  React.useEffect(() => {
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes spin {
+        0% { transform: rotate(0deg); }
+        100% { transform: rotate(360deg); }
+      }
+    `;
+    document.head.appendChild(style);
+    return () => {
+      document.head.removeChild(style);
+    };
+  }, []);
 
   useEffect(() => {
     fetch("http://127.0.0.1:8000/api/blog/posts/")
@@ -23,41 +39,62 @@ export default function Blog() {
 
   if (loading) {
     return (
-      <div style={loadingStateStyle}>
-        <div style={spinnerStyle} />
-        <h2 style={loadingTextStyle}>Curating Editorial Articles...</h2>
-      </div>
+      <>
+        <Helmet>
+          <title>The Dental Gallery | Blog - Dental Insights & Clinical Guides</title>
+          <meta name="description" content="Explore professional dental insights, advanced restorative guides, and preventive healthcare philosophies from our clinical specialists at The Dental Gallery." />
+          <meta name="keywords" content="dental blog, oral health tips, restorative dentistry, preventive care, dental insights Nairobi, The Dental Gallery blog" />
+        </Helmet>
+        <div style={loadingStateStyle}>
+          <div style={spinnerStyle} />
+          <h2 style={loadingTextStyle}>Curating Editorial Articles...</h2>
+        </div>
+      </>
     );
   }
 
   return (
-    <div style={pageWrapperStyle}>
-      
-      {/* SECTION HEADER */}
-      <section style={headerSectionStyle}>
-        <span style={goldLabelStyle}>The Gallery Journals</span>
-        <h1 style={mainHeadingStyle}>Dental Blog</h1>
-        <p style={subHeadingStyle}>
-          Explore professional insights, advanced restorative guides, and preventive healthcare 
-          philosophies direct from our clinical specialists.
-        </p>
-        <div style={decorativeDividerStyle} />
-      </section>
+    <>
+      <Helmet>
+        <title>The Dental Gallery | Blog - Expert Dental Insights & Clinical Guides</title>
+        <meta name="description" content="Explore professional dental insights, advanced restorative guides, and preventive healthcare philosophies from our clinical specialists at The Dental Gallery in Lavington, Nairobi." />
+        <meta name="keywords" content="dental blog, oral health tips, restorative dentistry, preventive care, dental insights, The Dental Gallery, Nairobi dentist blog" />
+        <meta property="og:title" content="The Dental Gallery | Dental Blog - Expert Clinical Insights" />
+        <meta property="og:description" content="Read our latest articles on dental health, advanced restorative techniques, and preventive care from our clinical specialists." />
+        <meta property="og:type" content="website" />
+        <meta property="og:url" content="https://thedentalgallery.com/blog" />
+        <meta property="og:image" content="/images/logo3.png" />
+        <meta name="twitter:card" content="summary_large_image" />
+      </Helmet>
 
-      {/* ARTICLES MAGAZINE MATRIX GRID */}
-      {posts.length === 0 ? (
-        <div style={{ textAlign: "center", padding: "40px 0", color: "#64748b" }}>
-          <p>No journal entries found. Check back soon for fresh insights.</p>
-        </div>
-      ) : (
-        <div style={blogGridStyle}>
-          {posts.map((post) => (
-            <BlogCard key={post.id} post={post} />
-          ))}
-        </div>
-      )}
+      <div style={pageWrapperStyle}>
+        
+        {/* SECTION HEADER */}
+        <section style={headerSectionStyle}>
+          <span style={goldLabelStyle}>The Gallery Journals</span>
+          <h1 style={mainHeadingStyle}>Dental Blog</h1>
+          <p style={subHeadingStyle}>
+            Explore professional insights, advanced restorative guides, and preventive healthcare 
+            philosophies direct from our clinical specialists.
+          </p>
+          <div style={decorativeDividerStyle} />
+        </section>
 
-    </div>
+        {/* ARTICLES MAGAZINE MATRIX GRID */}
+        {posts.length === 0 ? (
+          <div style={{ textAlign: "center", padding: "40px 0", color: "#64748b" }}>
+            <p>No journal entries found. Check back soon for fresh insights.</p>
+          </div>
+        ) : (
+          <div style={blogGridStyle}>
+            {posts.map((post) => (
+              <BlogCard key={post.id} post={post} />
+            ))}
+          </div>
+        )}
+
+      </div>
+    </>
   );
 }
 
@@ -81,7 +118,7 @@ function BlogCard({ post }) {
 
   const imageStyle = {
     width: "100%",
-    height: "220px",
+    height: "1000px",
     objectFit: "cover",
     display: "block",
     transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",

@@ -1,8 +1,10 @@
 import { Routes, Route, useLocation } from "react-router-dom";
+import { HelmetProvider } from "react-helmet-async";
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import CTA from "./components/CTA"; // Imported your luxury CTA component
+import FloatingWhatsApp from "./components/FloatingWhatsApp"; // Import the new component
 import Home from "./pages/Home";
 import About from "./pages/About";
 import Dentist from "./pages/Dentist";
@@ -18,28 +20,31 @@ function App() {
   const showCTA = location.pathname !== "/Booking";
 
   return (
-    <div>
-      {/* Pinned continuously at the top */}
-      <Navbar />
-      
-      {/* Dynamic page area */}
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/dentist" element={<Dentist />} />
-        <Route path="/blog" element={<Blog />} />
-        <Route path="/booking" element={<Booking />} />
-        <Route path="/contact" element={<Contact />} />
-        <Route path="/blog/:id" element={<BlogPost />} />
-      </Routes>
-       
-      {/* Only displays if the path is NOT /booking */}
-      {showCTA && <CTA />}
-
-      {/* Pinned continuously at the bottom of every page! */}
-      {/* Note: Removing the top border from the footer component will make it merge flawlessly with this CTA */}
-      <Footer />
-    </div>
+    <HelmetProvider>
+      <div>
+        {/* Pinned continuously at the top */}
+        <Navbar />
+        
+        {/* Dynamic page area */}
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/dentist" element={<Dentist />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/booking" element={<Booking />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/blog/:id" element={<BlogPost />} />
+        </Routes>
+         
+        {/* Only displays if the path is NOT /booking */}
+        {showCTA && <CTA />}
+     {/* Global Floating WhatsApp Button - Appears on EVERY page */}
+        <FloatingWhatsApp />
+        {/* Pinned continuously at the bottom of every page! */}
+        {/* Note: Removing the top border from the footer component will make it merge flawlessly with this CTA */}
+        <Footer />
+      </div>
+    </HelmetProvider>
   );
 }
 

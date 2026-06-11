@@ -6,12 +6,14 @@ export default function Navbar() {
       {/* TOP NAVIGATION BAR */}
       <header style={navBar}>
         <div style={navContainer}>
-          {/* Logo / Branding */}
+          {/* Logo / Branding with Logo 3 */}
           <div style={logoArea}>
-            <span style={{ color: "#b4b1aa", fontWeight: "900", fontSize: "24px", marginRight: "6px" }}>
-              {/* <img src="images/logo2.png" alt="Company Logo" width="150" height="auto"></img> */}
-            </span>
-            The Dental Gallery
+            <img 
+              src="/images/logo4.jpeg" 
+              alt="The Dental Gallery Logo" 
+              style={logoImage}
+            />
+            <span style={logoText}>The Dental Gallery</span>
           </div>
           
           {/* Navigation Links */}
@@ -62,7 +64,20 @@ const logoArea = {
   color: "#1f3b5b",
   display: "flex",
   alignItems: "center",
+  gap: "12px",
   letterSpacing: "0.5px"
+};
+
+const logoImage = {
+  height: "45px",
+  width: "auto",
+  display: "block"
+};
+
+const logoText = {
+  fontWeight: "900",
+  fontSize: "20px",
+  color: "#0f2038"
 };
 
 const navLinks = {
