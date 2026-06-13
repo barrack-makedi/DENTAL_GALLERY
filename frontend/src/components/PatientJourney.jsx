@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
 
-
 // --- STYLES ---
 const sectionStyle = {
   padding: "100px 20px",
-  background: "#f4f8fc", // Crisp, clean patient backdrop
+  background: "#f4f8fc",
   fontFamily: "Arial, sans-serif"
 };
 
 const sectionTitle = {
-  color: "#0f2038", // Deep luxury navy
+  color: "#0f2038",
   fontSize: "36px",
   fontWeight: "bold",
   textAlign: "center",
@@ -22,33 +21,33 @@ const gridContainer = {
   gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
   gap: "30px",
   maxWidth: "1200px",
-  margin: "0 auto"
+  margin: "0 auto 60px auto"
 };
 
 const cardStyle = {
   background: "#ffffff",
   borderRadius: "6px",
   padding: "40px 25px",
-  boxShadow: "0 8px 24px rgba(15, 32, 56, 0.04)", // Soft luxury depth shadow
+  boxShadow: "0 8px 24px rgba(15, 32, 56, 0.04)",
   display: "flex",
   flexDirection: "column",
   gap: "12px",
   position: "relative",
-  borderLeft: "4px solid #D4AF37", // Elegant gold side border indicator
+  borderLeft: "4px solid #D4AF37",
   transition: "all 0.3s ease"
 };
 
 const stepNumber = {
-  color: "#D4AF37", // Signature premium gold accent
+  color: "#D4AF37",
   fontSize: "28px",
   fontWeight: "bold",
   display: "block",
   marginBottom: "5px",
-  fontFamily: "Georgia, serif" // Elegant editorial look for the numbering
+  fontFamily: "Georgia, serif"
 };
 
 const cardHeader = {
-  color: "#0f2038", // Deep luxury navy
+  color: "#0f2038",
   fontSize: "20px",
   margin: "0",
   fontWeight: "bold",
@@ -56,10 +55,43 @@ const cardHeader = {
 };
 
 const cardText = {
-  color: "#475569", // Soft charcoal readable text
+  color: "#475569",
   fontSize: "14px",
   lineHeight: "1.6",
   margin: "0"
+};
+
+// --- IMAGE GALLERY STYLES - FIXED FOR PERFECT FIT ---
+const imageGalleryStyle = {
+  display: "flex",
+  gap: "30px",
+  justifyContent: "center",
+  flexWrap: "wrap",
+  maxWidth: "1200px",
+  margin: "0 auto",
+  padding: "0"
+};
+
+const imageWrapperStyle = {
+  flex: "1 1 400px",
+  height: "auto",
+  minHeight: "300px",
+  overflow: "hidden",
+  borderRadius: "8px",
+  backgroundColor: "#f4f8fc",
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  position: "relative"
+};
+
+const imageStyle = {
+  width: "100%",
+  height: "100%",
+  minHeight: "300px",
+  objectFit: "contain",  // Changed from scale-down to contain for perfect fit
+  objectPosition: "center",
+  display: "block"
 };
 
 // --- DATA STRUCTURE ---
@@ -97,6 +129,7 @@ export default function PatientJourney() {
     <section style={sectionStyle}>
       <h2 style={sectionTitle}>Patient Journey</h2>
 
+      {/* Patient Journey Steps */}
       <div style={gridContainer}>
         {journeySteps.map((item, index) => (
           <div 
@@ -126,6 +159,24 @@ export default function PatientJourney() {
             <p className="card-txt" style={cardText}>{item.text}</p>
           </div>
         ))}
+      </div>
+
+      {/* Images 19 and 20 Below the Steps - Perfect Fit */}
+      <div style={imageGalleryStyle}>
+        <div style={imageWrapperStyle}>
+          <img 
+            src='/images/image21.png'
+            alt='Dental Gallery Interior'
+            style={imageStyle}
+          />
+        </div>
+        <div style={imageWrapperStyle}>
+          <img 
+            src='/images/image22.png'
+            alt='Dental Gallery Treatment'
+            style={imageStyle}
+          />
+        </div>
       </div>
     </section>
   );

@@ -101,7 +101,10 @@ export default function Hero() {
     minHeight: "450px",
     position: "relative",
     overflow: "hidden",
-    backgroundColor: "#f0f2f5"
+    backgroundColor: "#f0f2f5",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center"
   };
 
   // REMOVED: The opacity transition effect - now images stay at full opacity
