@@ -25,7 +25,11 @@ SECRET_KEY = 'django-insecure-@qy%l*+$2v65hvsylegj!i$)6t*!z3&7$3jl(8fc^_-dexpl4(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+     'backend-production-6e0d.up.railway.app',
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -123,8 +127,15 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# CORS configuration
+CORS_ALLOWED_ORIGINS = [
+    "https://dental-gallery.vercel.app",
+    "https://dental-gallery-44p9sj3bq-barrack-makedis-projects.vercel.app",
+    "http://localhost:5173",  # For local development
+    "http://localhost:3000",   # For local development
+]
 
-CORS_ALLOW_ALL_ORIGINS = True
-
+# Or if you want to allow all origins temporarily (not recommended for production):
+# CORS_ALLOW_ALL_ORIGINS = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
