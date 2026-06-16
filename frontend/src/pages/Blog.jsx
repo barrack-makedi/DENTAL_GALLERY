@@ -22,7 +22,7 @@ export default function Blog() {
   }, []);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/blog/posts/")
+    fetch(`${import.meta.env.VITE_API_URL}/api/blog/posts/`)
       .then((res) => {
         if (!res.ok) throw new Error(`HTTP status: ${res.status}`);
         return res.json();

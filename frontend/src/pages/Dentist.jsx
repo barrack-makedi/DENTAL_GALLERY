@@ -6,7 +6,7 @@ export default function Dentist() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://127.0.0.1:8000/api/dentist/")
+    fetch(`${import.meta.env.VITE_API_URL}/api/dentist/`)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Server answered with status: ${res.status}`);
