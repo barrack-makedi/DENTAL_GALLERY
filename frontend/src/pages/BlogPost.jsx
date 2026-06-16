@@ -75,7 +75,7 @@ export default function BlogPost() {
   const metaDescription = plainTextContent.substring(0, 160);
   const imageUrl = post.featured_image?.startsWith("http")
     ? post.featured_image
-    : `http://127.0.0.1:8000${post.featured_image}`;
+    :  `${import.meta.env.VITE_API_URL}${post.featured_image}`;
 
   return (
     <>

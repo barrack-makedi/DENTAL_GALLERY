@@ -28,7 +28,7 @@ export default function Booking() {
 
     try {
       const response = await fetch(
-          `${import.meta.env.VITE_API_URL}/api/appointments/create/",
+          `${import.meta.env.VITE_API_URL}/api/appointments/create/`,
         {
           method: "POST",
           headers: {
