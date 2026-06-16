@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
      'backend-production-6e0d.up.railway.app',
+     '*.up.railway.app',
     'localhost',
     '127.0.0.1',
 ]
@@ -139,3 +140,11 @@ CORS_ALLOWED_ORIGINS = [
 # CORS_ALLOW_ALL_ORIGINS = True
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
+# At the bottom of the file, add:
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://backend-production-6e0d.up.railway.app',
+    'https://*.up.railway.app',  # Allows any Railway subdomain
+    'http://localhost:8000',
+    'http://127.0.0.1:8000',
+]
