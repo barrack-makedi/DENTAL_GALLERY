@@ -2,7 +2,8 @@ import React from 'react';
 import { Helmet } from 'react-helmet-async';
 import { Link } from "react-router-dom";
 import InfoCard from '../components/InfoCard'; // Adjust paths as per your folder layout
-
+import Stats from '../components/Stats';
+import PatientStories from '../components/PatientStories';
 export default function About() {
   return (
     <>
@@ -32,7 +33,7 @@ export default function About() {
             <div style={textColumnStyle}>
               <div style={editorialBodyContainerStyle}>
                 <p style={leadParagraphStyle}>
-                  The Dental Gallery is a modern boutique dental practice located in Lavington, Nairobi, 
+                  The Dental Gallery is a gallery of beautiful smiles located in Lavington, Nairobi, 
                   committed to delivering high-quality, patient-centered oral healthcare in a professional, 
                   welcoming, and contemporary environment.
                 </p>
@@ -115,7 +116,7 @@ export default function About() {
         {/* SECTION 4: CLINICAL FACILITY HERO SHOWCASE (DYNAMIC ASYMMETRIC HORIZONTAL SCROLL) */}
         <section style={facilityShowcaseSectionStyle}>
           <div style={sectionHeaderCenterStyle}>
-            <h2 style={sectionTitleStyle}>Our Facility & Patient Environment</h2>
+            <h2 style={sectionTitleStyle}>The dental gallery experience</h2>
             <p style={facilitySubtitleStyle}>Designed for Comfort. Equipped for Excellence.</p>
           </div>
           
@@ -159,6 +160,35 @@ export default function About() {
           <div className="facility-scroll-wrapper" style={horizontalScrollWrapperStyle}>
             
             {/* Item 1: Deep Landscape Profile */}
+            <div style={{ ...imageFrameStyle, flex: "0 0 500px" }}>
+              <img 
+                src="/images/tdgequipment1.jpeg" 
+                alt="Modern digital panoramic diagnostics workflow" 
+                style={dynamicImage} 
+              />
+            </div>
+            <div style={{ ...imageFrameStyle, flex: "0 0 500px" }}>
+              <img 
+                src="/images/tdgequipment2.jpeg" 
+                alt="Modern digital panoramic diagnostics workflow" 
+                style={dynamicImage} 
+              />
+            </div>
+            <div style={{ ...imageFrameStyle, flex: "0 0 500px" }}>
+              <img 
+                src="/images/tdgequipment3.jpeg" 
+                alt="Modern digital panoramic diagnostics workflow" 
+                style={dynamicImage} 
+              />
+            </div>
+            <div style={{ ...imageFrameStyle, flex: "0 0 500px" }}>
+              <img 
+                src="/images/tdgequipment4.jpeg" 
+                alt="Modern digital panoramic diagnostics workflow" 
+                style={dynamicImage} 
+              />
+            </div>
+
             <div style={{ ...imageFrameStyle, flex: "0 0 340px" }}>
               <img 
                 src="/images/image6.png" 
@@ -193,10 +223,68 @@ export default function About() {
                 style={dynamicImage} 
               />
             </div>
+            <div style={{ ...imageFrameStyle, flex: "0 0 300px" }}>
+              <img 
+                src="/images/tdgexperience1.jpeg" 
+                alt="Warm corporate reception architectural design layout" 
+                style={dynamicImage} 
+              />
+            </div>
+            <div style={{ ...imageFrameStyle, flex: "0 0 300px" }}>
+              <img 
+                src="/images/tdgexperience2.jpeg" 
+                alt="Warm corporate reception architectural design layout" 
+                style={dynamicImage} 
+              />
+            </div>
+            <div style={{ ...imageFrameStyle, flex: "0 0 300px" }}>
+              <img 
+                src="/images/tdgexperience3.jpeg" 
+                alt="Warm corporate reception architectural design layout" 
+                style={dynamicImage} 
+              />
+            </div>
+            <div style={{ ...imageFrameStyle, flex: "0 0 300px" }}>
+              <img 
+                src="/images/tdgexperience4.jpeg" 
+                alt="Warm corporate reception architectural design layout" 
+                style={dynamicImage} 
+              />
+            </div>
+            <div style={{ ...imageFrameStyle, flex: "0 0 300px" }}>
+              <img 
+                src="/images/tdgexperience5.jpeg" 
+                alt="Warm corporate reception architectural design layout" 
+                style={dynamicImage} 
+              />
+            </div>
+            <div style={{ ...imageFrameStyle, flex: "0 0 300px" }}>
+              <img 
+                src="/images/tdgexperience6.jpeg" 
+                alt="Warm corporate reception architectural design layout" 
+                style={dynamicImage} 
+              />
+            </div>
             
           </div>
         </section>
-        
+        <Stats/> 
+        <PatientStories/>
+
+<div style={imageFrameStyle}>
+  <img
+    src="/images/tdgexperience7.jpeg"
+    alt="Dental Gallery experience"
+    style={{
+      width: "100%",
+      maxWidth: "500px",
+      height: "700px",
+      objectFit: "cover",
+      display: "block",
+      margin: "0 auto"  // Changed from "90 auto" to "0 auto"
+    }}
+  />
+</div>
       </div>
     </>
   );

@@ -4,9 +4,19 @@ import { Helmet } from "react-helmet-async";
 export default function Dentist() {
   const [dentist, setDentist] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [imageKey, setImageKey] = useState(Date.now());
 
   useEffect(() => {
-    fetch(`${import.meta.env.VITE_API_URL}/api/dentist/`)
+    // Clear any cached image redirects
+    if ('caches' in window) {
+      caches.keys().then(names => {
+        names.forEach(name => {
+          caches.delete(name);
+        });
+      });
+    }
+
+    fetch(`${import.meta.env.VITE_API_URL}/api/dentist/?cb=${new Date().getTime()}`)
       .then((res) => {
         if (!res.ok) {
           throw new Error(`Server answered with status: ${res.status}`);
@@ -14,12 +24,21 @@ export default function Dentist() {
         return res.json();
       })
       .then((data) => {
-        console.log("Success! Data received:", data);
+        console.log("🔍 RAW API Response:", data);
+        
+        let dentistData;
         if (Array.isArray(data)) {
-          setDentist(data[0]);
+          dentistData = data[0];
         } else {
-          setDentist(data);
+          dentistData = data;
         }
+        
+        console.log("👨‍⚕️ Dentist Data:", dentistData);
+        console.log("🖼️ Profile Image Path:", dentistData.profile_image);
+        console.log("📁 Full Image URL:", `${import.meta.env.VITE_API_URL}${dentistData.profile_image}`);
+        
+        setDentist(dentistData);
+        setImageKey(Date.now());
         setLoading(false);
       })
       .catch((err) => {
@@ -29,7 +48,7 @@ export default function Dentist() {
   }, []);
 
   // Add CSS animation for spinner
-  React.useEffect(() => {
+  useEffect(() => {
     const style = document.createElement('style');
     style.textContent = `
       @keyframes spin {
@@ -43,6 +62,7 @@ export default function Dentist() {
     };
   }, []);
 
+  // 1. LOADING STATE
   if (loading) {
     return (
       <>
@@ -58,6 +78,7 @@ export default function Dentist() {
     );
   }
 
+  // 2. ERROR / EMPTY STATE
   if (!dentist) {
     return (
       <>
@@ -73,6 +94,32 @@ export default function Dentist() {
     );
   }
 
+  // Helper function to handle absolute pathing and bust browser asset caching
+  const getImageUrl = (imagePath) => {
+    if (!imagePath) return null;
+    
+    console.log("🔄 Processing image path:", imagePath);
+    
+    // Check if it's already a full URL
+    if (imagePath.startsWith('http')) {
+      console.log("✅ Already a full URL");
+      return `${imagePath}?v=${imageKey}`;
+    }
+    
+    // Remove any query parameters or fragments from the path
+    const cleanPath = imagePath.split('?')[0].split('#')[0];
+    console.log("🧹 Cleaned path:", cleanPath);
+    
+    const baseUri = `${import.meta.env.VITE_API_URL}${cleanPath}`;
+    const finalUrl = `${baseUri}?v=${imageKey}`;
+    
+    console.log("📸 Final image URL:", finalUrl);
+    return finalUrl;
+  };
+
+  const processedImageUrl = getImageUrl(dentist.profile_image);
+
+  // 3. MAIN RENDER STATE
   return (
     <>
       <Helmet>
@@ -81,9 +128,7 @@ export default function Dentist() {
         <meta name="keywords" content={`${dentist.name}, dentist Nairobi, dental clinic Lavington, ${dentist.title}, The Dental Gallery`} />
         <meta property="og:title" content={`The Dental Gallery | Dr. ${dentist.name} - Expert Dental Care`} />
         <meta property="og:description" content={`Learn about ${dentist.name}'s qualifications, experience, and approach to patient care.`} />
-        {dentist.profile_image && (
-          <meta property="og:image" content={dentist.profile_image.startsWith('http') ? dentist.profile_image : `http://127.0.0.1:8000${dentist.profile_image}`} />
-        )}
+        {processedImageUrl && <meta property="og:image" content={processedImageUrl} />}
       </Helmet>
 
       <div style={pageWrapperStyle}>
@@ -102,14 +147,29 @@ export default function Dentist() {
         {/* PROFILE GRID LAYOUT */}
         <div style={profileFlexLayoutStyle}>
           
-          {/* LEFT SIDE: Tailored Profile Image Bracket */}
+          {/* LEFT SIDE: Profile Image Bracket */}
           <div style={imageColumnStyle}>
-            {dentist.profile_image ? (
+            {processedImageUrl ? (
               <div style={imageFrameStyle}>
                 <img
-                  src={dentist.profile_image.startsWith('http') ? dentist.profile_image : `http://127.0.0.1:8000${dentist.profile_image}`}
+                  key={imageKey}
+                  src={processedImageUrl}
                   alt={dentist.name || "Lead Dentist"}
                   style={profileImageStyle}
+                  onError={(e) => {
+                    console.error("❌ Image failed to load:", processedImageUrl);
+                    console.log("💡 Current dentist data:", dentist);
+                    e.target.style.display = 'none';
+                    // Show fallback
+                    const parent = e.target.parentElement;
+                    parent.innerHTML = `
+                      <div style="width:100%;height:450px;border-radius:8px;background:#f1f5f9;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#94a3b8;border:2px dashed #cbd5e1;">
+                        <span style="font-size:50px;">🩺</span>
+                        <span style="font-size:14px;margin-top:10px;font-weight:600;">Image Not Available</span>
+                        <span style="font-size:12px;margin-top:5px;color:#64748b;">${dentist.profile_image}</span>
+                      </div>
+                    `;
+                  }}
                 />
               </div>
             ) : (
@@ -315,8 +375,6 @@ const credentialBodyStyle = {
   whiteSpace: "pre-line",
   margin: 0
 };
-
-// --- LOADING SPLASH ARTWORK STYLES ---
 
 const loadingStateStyle = {
   textAlign: "center",

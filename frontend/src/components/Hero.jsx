@@ -36,25 +36,31 @@ export default function Hero() {
       alt: 'Dental Gallery Interior'
     },
     { 
-      url: '/images/image15.png', 
+      url: '/images/dentalgalleryimage26.jpeg', 
       objectFit: 'contain', 
       objectPosition: 'center',
       alt: 'Modern Dental Equipment'
     },
     { 
-      url: '/images/image16.png', 
+      url: '/images/dentalgalleryimage32.jpeg', 
       objectFit: 'cover', 
       objectPosition: 'top 30%',
       alt: 'Treatment Room'
     },
     { 
-      url: '/images/image17.png', 
+      url: '/images/dentalgalleryimage24.jpeg', 
       objectFit: 'contain', 
       objectPosition: 'center 40%',
       alt: 'Dental Gallery Reception'
     },
     { 
-      url: '/images/image18.png', 
+      url: '/images/dentalgalleryimage29.jpeg', 
+      objectFit: 'cover', 
+      objectPosition: 'center',
+      alt: 'Clinical Excellence'
+    },
+    { 
+      url: '/images/dentalgalleryimage23.jpeg', 
       objectFit: 'cover', 
       objectPosition: 'center',
       alt: 'Clinical Excellence'

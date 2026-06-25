@@ -61,7 +61,7 @@ const cardText = {
   margin: "0"
 };
 
-// --- IMAGE GALLERY STYLES - FIXED FOR PERFECT FIT ---
+// --- IMAGE GALLERY STYLES ---
 const imageGalleryStyle = {
   display: "flex",
   gap: "30px",
@@ -73,9 +73,9 @@ const imageGalleryStyle = {
 };
 
 const imageWrapperStyle = {
-  flex: "1 1 400px",
+  flex: "1 1 200px",
   height: "auto",
-  minHeight: "300px",
+  minHeight: "200px",
   overflow: "hidden",
   borderRadius: "8px",
   backgroundColor: "#f4f8fc",
@@ -85,13 +85,65 @@ const imageWrapperStyle = {
   position: "relative"
 };
 
-const imageStyle = {
+// --- INDIVIDUAL IMAGE STYLES ---
+
+// Image 1: Portrait style (UNCHANGED)
+const imageStyle1 = {
   width: "100%",
   height: "100%",
-  minHeight: "300px",
-  objectFit: "contain",  // Changed from scale-down to contain for perfect fit
-  objectPosition: "center",
-  display: "block"
+  minHeight: "350px",
+  objectFit: "cover",
+  objectPosition: "top center"
+};
+
+// Image 2: FIXED - Removed zoom, proper sizing
+const imageStyle2 = {
+  width: "100%",
+  height: "100%",
+  minHeight: "320px",
+  objectFit: "cover",
+  objectPosition: "center 40%", // Adjusted to show content better
+  // Removed transform: scale(1.05) - no more zoom
+  transition: "transform 0.3s ease"
+};
+
+// Image 3: Square style with zoom (UNCHANGED)
+const imageStyle3 = {
+  width: "100%",
+  height: "100%",
+  minHeight: "320px",
+  objectFit: "cover",
+  objectPosition: "center 30%",
+  transform: "scale(1.05)",
+  transition: "transform 0.3s ease"
+};
+
+// --- INDIVIDUAL WRAPPER STYLES ---
+
+// Image 1 - Keep exactly as is
+const imageWrapperStyle1 = {
+  ...imageWrapperStyle,
+  flex: "1 1 250px",
+  minHeight: "350px",
+  borderRadius: "12px"
+};
+
+// Image 2 - FIXED - Removed gold shadow, standard rectangle
+const imageWrapperStyle2 = {
+  ...imageWrapperStyle,
+  flex: "1 1 280px", // Made slightly wider
+  minHeight: "320px",
+  borderRadius: "12px", // Standard rounded corners
+  boxShadow: "0 4px 12px rgba(0,0,0,0.08)" // Subtle shadow
+};
+
+// Image 3 - Keep exactly as is
+const imageWrapperStyle3 = {
+  ...imageWrapperStyle,
+  flex: "1 1 220px",
+  minHeight: "320px",
+  borderRadius: "8px 30px 8px 30px",
+  boxShadow: "0 8px 24px rgba(212, 175, 55, 0.2)"
 };
 
 // --- DATA STRUCTURE ---
@@ -132,49 +184,77 @@ export default function PatientJourney() {
       {/* Patient Journey Steps */}
       <div style={gridContainer}>
         {journeySteps.map((item, index) => (
-          <div 
-            key={index} 
+          <div
+            key={index}
             style={cardStyle}
             onMouseEnter={(e) => {
               e.currentTarget.style.transform = "translateY(-4px)";
-              e.currentTarget.style.boxShadow = "0 16px 32px rgba(15, 32, 56, 0.08)";
+              e.currentTarget.style.boxShadow =
+                "0 16px 32px rgba(15, 32, 56, 0.08)";
               e.currentTarget.style.background = "#0f2038";
-              // Update text colors on hover for a dramatic luxury inverted effect
-              e.currentTarget.querySelector('.step-num').style.color = "#ffffff";
-              e.currentTarget.querySelector('.card-head').style.color = "#D4AF37";
-              e.currentTarget.querySelector('.card-txt').style.color = "#cbd5e1";
+              e.currentTarget.querySelector(".step-num").style.color =
+                "#ffffff";
+              e.currentTarget.querySelector(".card-head").style.color =
+                "#D4AF37";
+              e.currentTarget.querySelector(".card-txt").style.color =
+                "#cbd5e1";
             }}
             onMouseLeave={(e) => {
               e.currentTarget.style.transform = "translateY(0)";
-              e.currentTarget.style.boxShadow = "0 8px 24px rgba(15, 32, 56, 0.04)";
+              e.currentTarget.style.boxShadow =
+                "0 8px 24px rgba(15, 32, 56, 0.04)";
               e.currentTarget.style.background = "#ffffff";
-              // Reset original text colors
-              e.currentTarget.querySelector('.step-num').style.color = "#D4AF37";
-              e.currentTarget.querySelector('.card-head').style.color = "#0f2038";
-              e.currentTarget.querySelector('.card-txt').style.color = "#475569";
+              e.currentTarget.querySelector(".step-num").style.color =
+                "#D4AF37";
+              e.currentTarget.querySelector(".card-head").style.color =
+                "#0f2038";
+              e.currentTarget.querySelector(".card-txt").style.color =
+                "#475569";
             }}
           >
-            <span className="step-num" style={stepNumber}>{item.step}</span>
-            <h3 className="card-head" style={cardHeader}>{item.title}</h3>
-            <p className="card-txt" style={cardText}>{item.text}</p>
+            <span className="step-num" style={stepNumber}>
+              {item.step}
+            </span>
+
+            <h3 className="card-head" style={cardHeader}>
+              {item.title}
+            </h3>
+
+            <p className="card-txt" style={cardText}>
+              {item.text}
+            </p>
           </div>
         ))}
       </div>
 
-      {/* Images 19 and 20 Below the Steps - Perfect Fit */}
+      {/* Image Gallery */}
+      <h2 style={sectionTitle}>Transformations that speak</h2>
+
       <div style={imageGalleryStyle}>
-        <div style={imageWrapperStyle}>
-          <img 
-            src='/images/image21.png'
-            alt='Dental Gallery Interior'
-            style={imageStyle}
+        {/* Image 1 - Portrait Style (UNCHANGED) */}
+        <div style={imageWrapperStyle1}>
+          <img
+            src="/images/dentalgalleryimage31.jpeg"
+            alt="Dental Gallery Interior"
+            style={imageStyle1}
           />
         </div>
-        <div style={imageWrapperStyle}>
-          <img 
-            src='/images/image22.png'
-            alt='Dental Gallery Treatment'
-            style={imageStyle}
+
+        {/* Image 2 - FIXED: No zoom, proper sizing */}
+        <div style={imageWrapperStyle2}>
+          <img
+            src="/images/dentalgalleryimage28.jpeg"
+            alt="Dental Gallery Treatment"
+            style={imageStyle2}
+          />
+        </div>
+
+        {/* Image 3 - Rounded Corner Feature (UNCHANGED) */}
+        <div style={imageWrapperStyle3}>
+          <img
+            src="/images/dentalgalleryimage33.jpeg"
+            alt="Dental Gallery Treatment"
+            style={imageStyle3}
           />
         </div>
       </div>

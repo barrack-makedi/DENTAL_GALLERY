@@ -1,6 +1,8 @@
 from django.urls import path
-from .views import get_dentist
+from . import views
 
 urlpatterns = [
-    path('', get_dentist),
+    path('', views.get_dentist, name='get_dentist'),  # Changed from 'api/dentist/' to ''
+    path('update/', views.update_dentist, name='update_dentist'),
+    path('upload-image/', views.upload_dentist_image, name='upload_dentist_image'),
 ]
