@@ -151,4 +151,5 @@ CSRF_TRUSTED_ORIGINS = [
 ]
 CORS_ALLOWED_ORIGIN_REGEXES = [
     r"^https://dental-gallery-.*\.vercel\.app$",
+    r"^https://dental-gallery-.*-barrack-makedis-projects\.vercel\.app$",
 ]
