@@ -130,10 +130,11 @@ STATIC_URL = 'static/'
 
 # CORS configuration
 CORS_ALLOWED_ORIGINS = [
-    "https://dental-gallery.vercel.app",
+   "https://dental-gallery.vercel.app",
     "https://dental-gallery-44p9sj3bq-barrack-makedis-projects.vercel.app",
-    "http://localhost:5173",  # For local development
-    "http://localhost:3000",   # For local development
+    "https://dental-gallery-76ox57ai0-barrack-makedis-projects.vercel.app",  # Added this one
+    "http://localhost:5173",  
+    "http://localhost:3000",
 ]
 
 # Or if you want to allow all origins temporarily (not recommended for production):
@@ -146,5 +147,6 @@ CSRF_TRUSTED_ORIGINS = [
     'https://backend-production-6e0d.up.railway.app',
     'https://*.up.railway.app',  # Allows any Railway subdomain
     'http://localhost:8000',
+    'https://dental-gallery.vercel.app',
     'http://127.0.0.1:8000',
 ]
