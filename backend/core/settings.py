@@ -131,8 +131,7 @@ STATIC_URL = 'static/'
 # CORS configuration
 CORS_ALLOWED_ORIGINS = [
    "https://dental-gallery.vercel.app",
-    "https://dental-gallery-44p9sj3bq-barrack-makedis-projects.vercel.app",
-    "https://dental-gallery-76ox57ai0-barrack-makedis-projects.vercel.app",  # Added this one
+
     "http://localhost:5173",  
     "http://localhost:3000",
 ]
@@ -149,4 +148,7 @@ CSRF_TRUSTED_ORIGINS = [
     'http://localhost:8000',
     'https://dental-gallery.vercel.app',
     'http://127.0.0.1:8000',
+]
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    r"^https://dental-gallery-.*\.vercel\.app$",
 ]
