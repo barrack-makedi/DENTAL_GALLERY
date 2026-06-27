@@ -84,7 +84,7 @@ export default function Leadership() {
               e.target.style.color = "#ffffff";
             }}
           >
-            Meet Our Team
+            MEET THE LEAD DOCTOR
           </button>
         </a>
       </div>
