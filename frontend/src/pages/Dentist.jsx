@@ -200,7 +200,7 @@ export default function Dentist() {
 
               {dentist.credentials && (
                 <div style={credentialBlockStyle}>
-                  <h3 style={credentialHeadingStyle}>📜 Area of interests</h3>
+                  <h3 style={credentialHeadingStyle}>📜 Areas of interest</h3>
                   <p style={credentialBodyStyle}>{dentist.credentials}</p>
                 </div>
               )}
