@@ -20,7 +20,7 @@ export default function Navbar() {
           <nav style={navLinks}>
             <Link to="/" style={navLink}>Home</Link>
             <Link to="/About" style={navLink}>About</Link>
-            <Link to="/Dentist" style={navLink}>Our Team</Link>
+            <Link to="/Dentist" style={navLink}>Leadership</Link>
             <Link to="/contact" style={navLink}>Contact</Link>
             <Link to="/blog" style={navLink}>Blog</Link>
             <Link to="/Booking">
