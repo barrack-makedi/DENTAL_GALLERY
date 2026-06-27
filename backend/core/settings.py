@@ -37,12 +37,14 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
     'corsheaders',
+    'cloudinary_storage',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'cloudinary',
     'blog',
     'dentists',
     'users',
@@ -54,6 +56,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -138,6 +141,12 @@ STATIC_URL = 'static/'
 
 # Or if you want to allow all origins temporarily (not recommended for production):
 # CORS_ALLOW_ALL_ORIGINS = True
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'dvrullolf',
+    'API_KEY': '921769392886726',
+    'API_SECRET': '2sNXVJy5ywSsRBh_7vwX71Rmc1I'
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 # At the bottom of the file, add:
