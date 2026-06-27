@@ -1,19 +1,19 @@
 export default function PatientStories() {
   const stories = [
     {
-      name: "Brenda Akinyi",
+      name: "Brenda Wairimu",
       treatment: "Smile Makeover",
       story:
         "The Dental Gallery completely transformed my smile and confidence. The team was professional, attentive, and made every visit comfortable.",
     },
     {
-      name: "Marion Ojodeh",
+      name: "Marion Mbithe",
       treatment: "Dental Implants",
       story:
         "From consultation to the final procedure, the experience was exceptional. I can smile, eat, and speak confidently again.",
     },
     {
-      name: "Talia Asin",
+      name: "Talia Chebet",
       treatment: "Teeth Whitening",
       story:
         "The results exceeded my expectations. The clinic's luxurious atmosphere and caring staff made the entire process enjoyable.",
