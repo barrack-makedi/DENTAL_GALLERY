@@ -118,7 +118,7 @@ function BlogCard({ post }) {
 
   const imageStyle = {
     width: "100%",
-    height: "1000px",
+    height: "240px", //  Fixed from 1000px to a clean, readable grid height
     objectFit: "cover",
     display: "block",
     transition: "transform 0.5s cubic-bezier(0.16, 1, 0.3, 1)",
@@ -140,10 +140,13 @@ function BlogCard({ post }) {
     transition: "color 0.2s ease"
   };
 
-  // Safe checks for absolute paths vs appended internal media paths
-  const imageUrl = post.featured_image?.startsWith("http")
+  // ✅ Fix 1: Dynamically use production Railway API path or absolute paths
+  const baseImgUrl = post.featured_image?.startsWith("http")
     ? post.featured_image
-    : `http://127.0.0.1:8000${post.featured_image}`;
+    : `${import.meta.env.VITE_API_URL}${post.featured_image}`;
+
+  // ✅ Fix 2: Inject dynamic cache-busting timestamps so edits reflect immediately
+  const finalImageUrl = post.featured_image ? `${baseImgUrl}?v=${Date.now()}` : null;
 
   return (
     <article 
@@ -151,9 +154,18 @@ function BlogCard({ post }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {post.featured_image && (
+      {finalImageUrl && (
         <div style={{ width: "100%", overflow: "hidden", position: "relative" }}>
-          <img src={imageUrl} alt={post.title} style={imageStyle} />
+          <img 
+            src={finalImageUrl} 
+            alt={post.title} 
+            style={imageStyle} 
+            onError={(e) => {
+              console.error("❌ Failed to display blog entry image:", finalImageUrl);
+              // Fallback image framework placeholder
+              e.target.src = "https://placehold.co/600x400?text=The+Dental+Gallery";
+            }}
+          />
         </div>
       )}
 

@@ -129,12 +129,12 @@ USE_TZ = True
 STATIC_URL = 'static/'
 
 # CORS configuration
-CORS_ALLOWED_ORIGINS = [
-   "https://dental-gallery.vercel.app",
+# CORS_ALLOWED_ORIGINS = [
+#    "https://dental-gallery.vercel.app",
 
-    "http://localhost:5173",  
-    "http://localhost:3000",
-]
+#     "http://localhost:5173",  
+#     "http://localhost:3000",
+# ]
 
 # Or if you want to allow all origins temporarily (not recommended for production):
 # CORS_ALLOW_ALL_ORIGINS = True
@@ -149,7 +149,8 @@ CSRF_TRUSTED_ORIGINS = [
     'https://dental-gallery.vercel.app',
     'http://127.0.0.1:8000',
 ]
-CORS_ALLOWED_ORIGIN_REGEXES = [
-    r"^https://dental-gallery-.*\.vercel\.app$",
-    r"^https://dental-gallery-.*-barrack-makedis-projects\.vercel\.app$",
-]
+# CORS_ALLOWED_ORIGIN_REGEXES = [
+#     r"^https://dental-gallery-.*\.vercel\.app$",
+   
+# ]
+CORS_ALLOW_ALL_ORIGINS = True
