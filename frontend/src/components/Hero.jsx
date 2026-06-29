@@ -70,6 +70,12 @@ export default function Hero() {
       objectFit: 'cover', 
       objectPosition: 'center',
       alt: 'Clinical Excellence'
+    },
+    { 
+      url: '/images/secondlastimage.jpeg', 
+      objectFit: 'cover', 
+      objectPosition: 'center',
+      alt: 'Clinical Excellence'
     }
   ];
   
