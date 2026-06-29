@@ -127,7 +127,7 @@ export default function Home() {
             {/* Item 2: Intimate Minimalist Portrait */}
             <div style={{ flex: "0 0 340px" }}>
               <img 
-                src="/images/image4.png" 
+                src="/images/tdgfinalimage40.jpeg" 
                 alt="Bespoke luxury dental operatory lounge architecture" 
                 style={dynamicImage} 
               />
@@ -136,16 +136,16 @@ export default function Home() {
             {/* Item 3: Secondary Feature Focal View */}
             <div style={{ flex: "0 0 600px" }}>
               <img 
-                src="/images/image5.png" 
+                src="/images/tdgfinalimage42.jpeg" 
                 alt="Advanced restorative clinical instruments layout" 
                 style={dynamicImage} 
               />
             </div>
 
             {/* Item 4: Balanced Accent Close-up */}
-            <div style={{ flex: "0 0 600px" }}>
+            <div style={{ flex: "0 0 350px" }}>
               <img 
-                src="/images/image2.png" 
+                src="/images/tdgfinalimage41.jpeg" 
                 alt="Warm corporate reception architectural design layout" 
                 style={dynamicImage} 
               />
