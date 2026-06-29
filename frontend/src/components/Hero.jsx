@@ -27,7 +27,7 @@ const handleOutlineLeave = (e) => {
 };
 
 export default function Hero() {
-  // Image configuration with individual sizing and positioning
+  // Image configuration with uniform sizing for seamless transitions
   const images = [
     { 
       url: '/images/image10.png', 
@@ -37,20 +37,20 @@ export default function Hero() {
     },
     { 
       url: '/images/dentalgalleryimage26.jpeg', 
-      objectFit: 'contain', 
+      objectFit: 'cover', 
       objectPosition: 'center',
       alt: 'Modern Dental Equipment'
     },
     { 
       url: '/images/dentalgalleryimage32.jpeg', 
       objectFit: 'cover', 
-      objectPosition: 'top 30%',
+      objectPosition: 'center',
       alt: 'Treatment Room'
     },
     { 
       url: '/images/dentalgalleryimage24.jpeg', 
-      objectFit: 'contain', 
-      objectPosition: 'center 40%',
+      objectFit: 'cover', 
+      objectPosition: 'center',
       alt: 'Dental Gallery Reception'
     },
     { 
@@ -64,20 +64,26 @@ export default function Hero() {
       objectFit: 'cover', 
       objectPosition: 'center',
       alt: 'Clinical Excellence'
+    },
+     { 
+      url: '/images/lastimage.jpeg', 
+      objectFit: 'cover', 
+      objectPosition: 'center',
+      alt: 'Clinical Excellence'
     }
   ];
   
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
 
-  // Auto-advance carousel every 5 seconds
+  // Auto-advance carousel every 3.5 seconds
   useEffect(() => {
     const timer = setInterval(() => {
-      nextImage();
-    }, 5000);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+    }, 3500);
     
     return () => clearInterval(timer);
-  }, [currentIndex]);
+  }, []);
 
   const nextImage = () => {
     if (isTransitioning) return;
@@ -113,13 +119,12 @@ export default function Hero() {
     justifyContent: "center"
   };
 
-  // REMOVED: The opacity transition effect - now images stay at full opacity
+  // Clean image swap without fade effect
   const getImageStyle = () => ({
     width: "100%",
     height: "100%",
     objectFit: images[currentIndex].objectFit,
-    objectPosition: images[currentIndex].objectPosition,
-    // Removed transition and opacity effects
+    objectPosition: images[currentIndex].objectPosition
   });
 
   const navButtonStyle = {
